@@ -1,5 +1,5 @@
 # Ex03 To-Do List using JavaScript
-## Date:
+## Date: 28-03-2025
 
 ## AIM
 To create a To-do Application with all features using JavaScript.
@@ -36,9 +36,98 @@ Deploy the website.
 Upload to GitHub Pages for free hosting.
 
 ## PROGRAM
-
+## index.html
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+        .container { width: 300px; }
+        ul { list-style: none; padding: 0; }
+        li { display: flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid #ddd; }
+        button { margin-left: 5px; }
+        footer { margin-top: 20px; font-size: 14px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>TODO</h2>
+        <input type="text" id="taskInput" placeholder="Add a task...">
+        <button onclick="addTask()">Add</button>
+        <ul id="taskList"></ul>
+        <button onclick="filterTasks('all')">All</button>
+        <button onclick="filterTasks('completed')">Completed</button>
+        <button onclick="filterTasks('pending')">Pending</button>
+    </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <footer class="bg-dark text-white text-center py-4 mt-2 ">
+            <p>&copy; 2025 TODO. All rights reserved. BY NITHISH S (212223220070)</p>
+        
+    </footer>
+    <script>
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+        
+        function renderTasks(filter = 'all') {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+            tasks.filter(task => filter === 'all' || (filter === 'completed' ? task.done : !task.done))
+                 .forEach((task, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span style="text-decoration: ${task.done ? 'line-through' : 'none'}">${task.text}</span>
+                        <div>
+                            <button onclick="toggleTask(${index})">✔</button>
+                            <button onclick="deleteTask(${index})">❌</button>
+                        </div>
+                    `;
+                    taskList.appendChild(li);
+                });
+        }
+        
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            if (taskInput.value.trim()) {
+                tasks.push({ text: taskInput.value, done: false });
+                taskInput.value = '';
+                saveTasks();
+                renderTasks();
+            }
+        }
+        
+        function toggleTask(index) {
+            tasks[index].done = !tasks[index].done;
+            saveTasks();
+            renderTasks();
+        }
+        
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            saveTasks();
+            renderTasks();
+        }
+        
+        function filterTasks(filter) {
+            renderTasks(filter);
+        }
+        
+        renderTasks();
+    </script>
+</body>
+</html>
+```
 
 ## OUTPUT
+![image](https://github.com/user-attachments/assets/a0804325-4942-4872-8a48-4e16c9ae4df8)
+![image](https://github.com/user-attachments/assets/a4def0cd-ab1b-4a2d-8a60-5578c14d6c24)
+
+![image](https://github.com/user-attachments/assets/10d66b91-b6bd-488e-9eca-91ec9ef522aa)
 
 
 ## RESULT
